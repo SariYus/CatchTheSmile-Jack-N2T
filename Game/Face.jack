@@ -1,0 +1,292 @@
+
+/** Initializes a face, saves a position on the board and a Boolean variable that indicates whether the face is happy */
+
+class Face {
+
+    field int x, y;
+    field boolean isHappy;
+
+    /* Constructor - Initializes the variables and draws face */
+    constructor Face new(int Ax, int Ay, boolean isFaceHappy) {
+        let x = Ax;
+        let y = Ay;
+        let isHappy = isFaceHappy;
+        do draw();
+        return this;
+    }
+
+    /* Deletes the face */
+    method void dispose() {
+        do Memory.deAlloc (this);
+        return;
+    }
+
+    /* Returns x */
+    method int getX() {
+        return x;
+    }
+
+    /* Returns y */
+    method int getY() {
+        return y;
+    }
+
+    /* Returns if face is happy */
+    method boolean getIsHappy() {
+        return isHappy;
+    }
+
+    /* Draws a face */
+    method void draw() {
+        if (isHappy) { do drawHappy((32 * y) + (x / 16)); }
+        else { do drawSad((32 * y) + (x / 16)); }
+        return;
+    }
+
+    /* Draws happy face */
+    method void drawHappy(int location) {
+        var int memAddress;
+
+        let memAddress = 16384 + location;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, -4096);
+        do Memory.poke(memAddress+128, -512);
+        do Memory.poke(memAddress+160, 3840);
+        do Memory.poke(memAddress+192, 384);
+        do Memory.poke(memAddress+224, 192);
+        do Memory.poke(memAddress+256, 96);
+        do Memory.poke(memAddress+288, 12384);
+        do Memory.poke(memAddress+320, 12336);
+        do Memory.poke(memAddress+352, 12336);
+        do Memory.poke(memAddress+384, 12312);
+        do Memory.poke(memAddress+416, 12312);
+        do Memory.poke(memAddress+448, 12312);
+        do Memory.poke(memAddress+480, 12312);
+
+        let memAddress = 16384 + (32 * y) + ((x + 16) / 16);
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 15);
+        do Memory.poke(memAddress+128, 127);
+        do Memory.poke(memAddress+160, 240);
+        do Memory.poke(memAddress+192, 384);
+        do Memory.poke(memAddress+224, 768);
+        do Memory.poke(memAddress+256, 1536);
+        do Memory.poke(memAddress+288, 1548);
+        do Memory.poke(memAddress+320, 3084);
+        do Memory.poke(memAddress+352, 3084);
+        do Memory.poke(memAddress+384, 6156);
+        do Memory.poke(memAddress+416, 6156);
+        do Memory.poke(memAddress+448, 6156);
+        do Memory.poke(memAddress+480, 6156);
+
+        let memAddress = 16384 + (32 * (y + 16)) + (x / 16);
+        do Memory.poke(memAddress+0, 792);
+        do Memory.poke(memAddress+32, 792);
+        do Memory.poke(memAddress+64, 792);
+        do Memory.poke(memAddress+96, 1560);
+        do Memory.poke(memAddress+128, 3632);
+        do Memory.poke(memAddress+160, 7216);
+        do Memory.poke(memAddress+192, -2000);
+        do Memory.poke(memAddress+224, -8096);
+        do Memory.poke(memAddress+256, 224);
+        do Memory.poke(memAddress+288, 448);
+        do Memory.poke(memAddress+320, 1920);
+        do Memory.poke(memAddress+352, -512);
+        do Memory.poke(memAddress+384, -2048);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = 16384 + (32 * (y + 16)) + ((x + 16) / 16);
+        do Memory.poke(memAddress+0, 6336);
+        do Memory.poke(memAddress+32, 6336);
+        do Memory.poke(memAddress+64, 6336);
+        do Memory.poke(memAddress+96, 6240);
+        do Memory.poke(memAddress+128, 3184);
+        do Memory.poke(memAddress+160, 3128);
+        do Memory.poke(memAddress+192, 3103);
+        do Memory.poke(memAddress+224, 1543);
+        do Memory.poke(memAddress+256, 1792);
+        do Memory.poke(memAddress+288, 896);
+        do Memory.poke(memAddress+320, 480);
+        do Memory.poke(memAddress+352, 127);
+        do Memory.poke(memAddress+384, 31);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+
+    /* Draws sad face */
+    method void drawSad(int location) {
+        var int memAddress;
+
+        let memAddress = 16384 + location;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, -4096);
+        do Memory.poke(memAddress+128, -512);
+        do Memory.poke(memAddress+160, 3840);
+        do Memory.poke(memAddress+192, 384);
+        do Memory.poke(memAddress+224, 192);
+        do Memory.poke(memAddress+256, 96);
+        do Memory.poke(memAddress+288, 12384);
+        do Memory.poke(memAddress+320, 12336);
+        do Memory.poke(memAddress+352, 12336);
+        do Memory.poke(memAddress+384, 12312);
+        do Memory.poke(memAddress+416, 12312);
+        do Memory.poke(memAddress+448, 12312);
+        do Memory.poke(memAddress+480, 12312);
+
+        let memAddress = 16384 + (32 * y) + ((x + 16) / 16);
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 15);
+        do Memory.poke(memAddress+128, 127);
+        do Memory.poke(memAddress+160, 240);
+        do Memory.poke(memAddress+192, 384);
+        do Memory.poke(memAddress+224, 768);
+        do Memory.poke(memAddress+256, 1536);
+        do Memory.poke(memAddress+288, 1548);
+        do Memory.poke(memAddress+320, 3084);
+        do Memory.poke(memAddress+352, 3084);
+        do Memory.poke(memAddress+384, 6156);
+        do Memory.poke(memAddress+416, 6156);
+        do Memory.poke(memAddress+448, 6156);
+        do Memory.poke(memAddress+480, 6156);
+
+        let memAddress = 16384 + (32 * (y + 16)) + (x / 16);
+        do Memory.poke(memAddress+0, 24);
+        do Memory.poke(memAddress+32, 24);
+        do Memory.poke(memAddress+64, 24);
+        do Memory.poke(memAddress+96, -16360);
+        do Memory.poke(memAddress+128, -4048);
+        do Memory.poke(memAddress+160, 14384);
+        do Memory.poke(memAddress+192, 3120);
+        do Memory.poke(memAddress+224, 3168);
+        do Memory.poke(memAddress+256, 224);
+        do Memory.poke(memAddress+288, 448);
+        do Memory.poke(memAddress+320, 1920);
+        do Memory.poke(memAddress+352, -512);
+        do Memory.poke(memAddress+384, -2048);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = 16384 + (32 * (y + 16)) + ((x + 16) / 16);
+        do Memory.poke(memAddress+0, 6144);
+        do Memory.poke(memAddress+32, 6144);
+        do Memory.poke(memAddress+64, 6144);
+        do Memory.poke(memAddress+96, 6147);
+        do Memory.poke(memAddress+128, 3087);
+        do Memory.poke(memAddress+160, 3100);
+        do Memory.poke(memAddress+192, 3120);
+        do Memory.poke(memAddress+224, 1584);
+        do Memory.poke(memAddress+256, 1792);
+        do Memory.poke(memAddress+288, 896);
+        do Memory.poke(memAddress+320, 480);
+        do Memory.poke(memAddress+352, 127);
+        do Memory.poke(memAddress+384, 31);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        return;
+    }
+
+    /* Erases a face */
+    method void erase() {
+        var int memAddress;
+
+        let memAddress = 16384 + (32 * y) + (x / 16);
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = 16384 + (32 * y) + ((x + 16) / 16);
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = 16384 + (32 * (y + 16)) + (x / 16);
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = 16384 + (32 * (y + 16)) + ((x + 16) / 16);
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        return;
+    }
+
+    /* Moves a face down by erase it and draw again */
+    method boolean move() {
+        if (y < 224) {
+            let y = y + 1;
+            do draw();
+            return true;
+        }
+        do erase();
+        return false;
+    }
+}

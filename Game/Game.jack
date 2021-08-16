@@ -1,0 +1,493 @@
+
+/** Runs the game
+Saves player and game-board objects and points variable and uses it.
+fail boolean signs if the game failed.
+ */
+
+class Game {
+
+    field Player I;
+    field Board board;
+    field int points;
+    field boolean fail;
+
+    /* Constructor - creates a player and inits variables */
+    constructor Game new() {
+        let I = Player.new(240, 224);
+        let points = 50;
+        let fail = false;
+        return this;
+    }
+
+    /* Checks after each movement on the board if the man playing touched a face, if he touched happy - adds 10 points, if touched sad - reduces 12 points */
+    method void catchFace(int level) {
+        var int myX, myY, i;
+        var Array faces;
+        var Face face;
+        var int length;
+        let myX = I.getX();
+        let myY = 240;
+        let i = 0;
+        let faces = board.getFaces();
+
+        if (1 = level) { let length = 7; }
+        if (2 = level) { let length = 10; }
+        if (3 = level) { let length = 12; }
+        while (i < length) {
+            let face = faces[i];
+            if (~(null = face)) {
+                if (face.getY() < 224) {
+                    if (((face.getY() + 32) > (myY - 1)) & (~(((face.getX() + 3) > (myX + 30)) | ((face.getX() + 29) < myX)))) {
+                        do face.erase();
+                        let faces[i] = null;
+                        if (face.getIsHappy()) { let points = points + 10; }
+                        else {
+                            if(points < 12){
+                                do gameOver();
+                                let fail = true;
+                                return;
+                            }
+                            let points = points - 12;
+                        }
+                        do printPoints();
+                    }
+                }
+            }
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /* Prints points number */
+    method void printPoints() {
+        do Output.moveCursor(1, 56);
+        do Output.printString("points:");
+        do Output.moveCursor(3, 58);
+        do Output.printString("   ");
+        do Output.moveCursor(3, 58);
+        do Output.printInt(points);
+        return;
+    }
+
+    /* Ends the game if the player failed */
+    method void gameOver() {
+        do Screen.clearScreen();
+        do Output.moveCursor(13, 23);
+        do Output.printString("GAME OVER");
+        do Face.new(220, 100, false);
+
+        return;
+    }
+
+    /* Prints level number before each level */
+    method void printLevel(int level) {
+        var int location, memAddress;
+        let location = 428;
+        let memAddress = 16384 + location;
+        do Memory.poke(memAddress+0, 7);
+        do Memory.poke(memAddress+32, 7);
+        do Memory.poke(memAddress+64, 7);
+        do Memory.poke(memAddress+96, 7);
+        do Memory.poke(memAddress+128, 7);
+        do Memory.poke(memAddress+160, 7);
+        do Memory.poke(memAddress+192, 7);
+        do Memory.poke(memAddress+224, 7);
+        do Memory.poke(memAddress+256, 7);
+        do Memory.poke(memAddress+288, 7);
+        do Memory.poke(memAddress+320, 7);
+        do Memory.poke(memAddress+352, 7);
+        do Memory.poke(memAddress+384, 7);
+        do Memory.poke(memAddress+416, 4095);
+        do Memory.poke(memAddress+448, 4095);
+        do Memory.poke(memAddress+480, 4095);
+
+        let memAddress = memAddress + 1;
+        do Memory.poke(memAddress+0, 4095);
+        do Memory.poke(memAddress+32, 4095);
+        do Memory.poke(memAddress+64, 4095);
+        do Memory.poke(memAddress+96, 7);
+        do Memory.poke(memAddress+128, 7);
+        do Memory.poke(memAddress+160, 7);
+        do Memory.poke(memAddress+192, 7);
+        do Memory.poke(memAddress+224, 2047);
+        do Memory.poke(memAddress+256, 2047);
+        do Memory.poke(memAddress+288, 7);
+        do Memory.poke(memAddress+320, 7);
+        do Memory.poke(memAddress+352, 7);
+        do Memory.poke(memAddress+384, 7);
+        do Memory.poke(memAddress+416, 4095);
+        do Memory.poke(memAddress+448, 4095);
+        do Memory.poke(memAddress+480, 4095);
+
+        let memAddress = memAddress + 1;
+        do Memory.poke(memAddress+0, 3591);
+        do Memory.poke(memAddress+32, 3591);
+        do Memory.poke(memAddress+64, 3591);
+        do Memory.poke(memAddress+96, 3591);
+        do Memory.poke(memAddress+128, 3591);
+        do Memory.poke(memAddress+160, 3591);
+        do Memory.poke(memAddress+192, 3591);
+        do Memory.poke(memAddress+224, 3855);
+        do Memory.poke(memAddress+256, 1806);
+        do Memory.poke(memAddress+288, 1806);
+        do Memory.poke(memAddress+320, 1950);
+        do Memory.poke(memAddress+352, 924);
+        do Memory.poke(memAddress+384, 924);
+        do Memory.poke(memAddress+416, 1020);
+        do Memory.poke(memAddress+448, 504);
+        do Memory.poke(memAddress+480, 504);
+
+        let memAddress = memAddress + 1;
+        do Memory.poke(memAddress+0, 4095);
+        do Memory.poke(memAddress+32, 4095);
+        do Memory.poke(memAddress+64, 4095);
+        do Memory.poke(memAddress+96, 7);
+        do Memory.poke(memAddress+128, 7);
+        do Memory.poke(memAddress+160, 7);
+        do Memory.poke(memAddress+192, 7);
+        do Memory.poke(memAddress+224, 2047);
+        do Memory.poke(memAddress+256, 2047);
+        do Memory.poke(memAddress+288, 7);
+        do Memory.poke(memAddress+320, 7);
+        do Memory.poke(memAddress+352, 7);
+        do Memory.poke(memAddress+384, 7);
+        do Memory.poke(memAddress+416, 4095);
+        do Memory.poke(memAddress+448, 4095);
+        do Memory.poke(memAddress+480, 4095);
+
+        let memAddress = memAddress + 1;
+        do Memory.poke(memAddress+0, 7);
+        do Memory.poke(memAddress+32, 7);
+        do Memory.poke(memAddress+64, 7);
+        do Memory.poke(memAddress+96, 7);
+        do Memory.poke(memAddress+128, 7);
+        do Memory.poke(memAddress+160, 7);
+        do Memory.poke(memAddress+192, 7);
+        do Memory.poke(memAddress+224, 7);
+        do Memory.poke(memAddress+256, 7);
+        do Memory.poke(memAddress+288, 7);
+        do Memory.poke(memAddress+320, 7);
+        do Memory.poke(memAddress+352, 7);
+        do Memory.poke(memAddress+384, 7);
+        do Memory.poke(memAddress+416, 4095);
+        do Memory.poke(memAddress+448, 4095);
+        do Memory.poke(memAddress+480, 4095);
+
+        let memAddress = memAddress + 2;
+        if (level = 1) {
+            do Memory.poke(memAddress+0, 2016);
+            do Memory.poke(memAddress+32, 2032);
+            do Memory.poke(memAddress+64, 2040);
+            do Memory.poke(memAddress+96, 1852);
+            do Memory.poke(memAddress+128, 1822);
+            do Memory.poke(memAddress+160, 1806);
+            do Memory.poke(memAddress+192, 1806);
+            do Memory.poke(memAddress+224, 1792);
+            do Memory.poke(memAddress+256, 1792);
+            do Memory.poke(memAddress+288, 1792);
+            do Memory.poke(memAddress+320, 1792);
+            do Memory.poke(memAddress+352, 1792);
+            do Memory.poke(memAddress+384, 1792);
+            do Memory.poke(memAddress+416, 1792);
+            do Memory.poke(memAddress+448, 1792);
+            do Memory.poke(memAddress+480, 1792);
+        }
+
+        if (level = 2) {
+            do Memory.poke(memAddress+0, 504);
+            do Memory.poke(memAddress+32, 1022);
+            do Memory.poke(memAddress+64, 2047);
+            do Memory.poke(memAddress+96, 3855);
+            do Memory.poke(memAddress+128, 3584);
+            do Memory.poke(memAddress+160, 3584);
+            do Memory.poke(memAddress+192, 3840);
+            do Memory.poke(memAddress+224, 1984);
+            do Memory.poke(memAddress+256, 496);
+            do Memory.poke(memAddress+288, 124);
+            do Memory.poke(memAddress+320, 30);
+            do Memory.poke(memAddress+352, 7);
+            do Memory.poke(memAddress+384, 7);
+            do Memory.poke(memAddress+416, 4095);
+            do Memory.poke(memAddress+448, 4095);
+            do Memory.poke(memAddress+480, 4095);
+        }
+
+        if (level = 3) {
+            do Memory.poke(memAddress+0, 248);
+            do Memory.poke(memAddress+32, 1022);
+            do Memory.poke(memAddress+64, 2047);
+            do Memory.poke(memAddress+96, 3591);
+            do Memory.poke(memAddress+128, 3587);
+            do Memory.poke(memAddress+160, 3840);
+            do Memory.poke(memAddress+192, 1920);
+            do Memory.poke(memAddress+224, 960);
+            do Memory.poke(memAddress+256, 960);
+            do Memory.poke(memAddress+288, 1920);
+            do Memory.poke(memAddress+320, 3840);
+            do Memory.poke(memAddress+352, 3587);
+            do Memory.poke(memAddress+384, 3847);
+            do Memory.poke(memAddress+416, 2047);
+            do Memory.poke(memAddress+448, 1022);
+            do Memory.poke(memAddress+480, 248);
+        }
+
+        return;
+    }
+
+    /* Erase level number after printing */
+    method void eraseLevel() {
+        var int location, memAddress;
+        let location = 428;
+        let memAddress = 16384 + location;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = memAddress + 1;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = memAddress + 1;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = memAddress + 1;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = memAddress + 1;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        let memAddress = memAddress + 2;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, 0);
+        do Memory.poke(memAddress+192, 0);
+        do Memory.poke(memAddress+224, 0);
+        do Memory.poke(memAddress+256, 0);
+        do Memory.poke(memAddress+288, 0);
+        do Memory.poke(memAddress+320, 0);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+
+        return;
+    }
+
+    /* Ends the game if the player succeeded */
+    method void endGame() {
+        var int i, x;
+        let i = 0;
+        do Screen.clearScreen();
+        while (i < 20) {
+            let x = 220 + (32 * i);
+            // do Output.moveCursor(0, 0);
+            // do Output.printInt(x);
+            do Face.new(x, 100, true);
+            let i = i + 1;
+        }
+        do Output.moveCursor(13, 23);
+        do Output.printString("YOU WIN!");
+        do Output.moveCursor(15, 21);
+        do Output.printString("Your score is: ");
+        do Output.moveCursor(17, 22);
+        do Output.printInt(points);
+        do Output.printString(" POINTS");
+        return;
+    }
+
+    /* Runs the game - 3 levels */
+    method void run() {
+        var boolean isFaceExist;
+        var int i;
+        let isFaceExist = true;
+        let i = 0;
+        do printLevel(1);
+        do Sys.wait(1000);
+        do eraseLevel();
+        let board = Board.new(1);
+        do printPoints();
+        while (i < 3) {
+            if (isFaceExist) {
+                let isFaceExist = board.run(1);
+                do catchFace(1);
+                if (fail) { return; }
+            }
+            else {
+                let isFaceExist = true;
+                if (i < 2) { let board = Board.new(1); }
+                let i = i + 1;
+            }
+            do I.draw((32 * I.getY()) + (I.getX() / 16));
+            if (i < 3) {
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+            }
+        }
+        if (points < 0) {
+            do gameOver();
+            return;
+        }
+        do printLevel(2);
+        do Sys.wait(1000);
+        do eraseLevel();
+        let board = Board.new(2);
+        let isFaceExist = true;
+        let i = 0;
+        while (i < 3) {
+            if (isFaceExist) {
+                let isFaceExist = board.run(2);
+                do catchFace(2);
+                if (fail) { return; }
+            }
+            else {
+                let isFaceExist = true;
+                if (i < 2) { let board = Board.new(2); }
+                let i = i + 1;
+            }
+            do I.draw((32 * I.getY()) + (I.getX() / 16));
+            if (i < 3) {
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+            }
+        }
+
+        if (points < 0) {
+            do gameOver();
+            return;
+        }
+        do printLevel(3);
+        do Sys.wait(1000);
+        do eraseLevel();
+        let board = Board.new(3);
+        let isFaceExist = true;
+        let i = 0;
+        while (i < 3) {
+            if (isFaceExist) {
+                let isFaceExist = board.run(3);
+                do catchFace(2);
+                if (fail) { return; }
+            }
+            else {
+                let isFaceExist = true;
+                if (i < 2) { let board = Board.new(3); }
+                let i = i + 1;
+            }
+            do I.draw((32 * I.getY()) + (I.getX() / 16));
+            if (i < 3) {
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+                do I.run();
+            }
+        }
+        if (points < 0) {
+            do gameOver();
+            return;
+        }
+        do endGame();
+        return;
+    }
+
+    /* Deletes the game at the end */
+    method void dispose() {
+        do I.dispose();
+        do board.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+}

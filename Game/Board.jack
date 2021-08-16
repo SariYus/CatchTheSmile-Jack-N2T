@@ -1,0 +1,167 @@
+
+/** Initializes the game board and runs it.
+saves an array of faces, and Boolean variables for checking if the board is blank. */
+
+class Board {
+
+    field Array faces;
+    field boolean isSucceed, isSucceed1, isSucceed2;
+
+    /* Constructor - Initializes the variables and draws faces */
+    constructor Board new(int level) {
+        let isSucceed = true;
+        let isSucceed1 = false;
+        let isSucceed2 = false;
+
+        if (1 = level) {
+            let faces = Array.new(7);
+
+            let faces[0] = Face.new(20, 0, true);
+            let faces[1] = Face.new(100, 0, false);
+            let faces[2] = Face.new(160, 0, true);
+            let faces[3] = Face.new(200, 0, false);
+            let faces[4] = Face.new(260, 0, true);
+            let faces[5] = Face.new(300, 0, false);
+            let faces[6] = Face.new(430, 0, false);
+        }
+
+        if (2 = level) {
+            let faces = Array.new(10);
+
+            let faces[0] = Face.new(20, 0, true);
+            let faces[1] = Face.new(80, 0, true);
+            let faces[2] = Face.new(160, 0, true);
+            let faces[3] = Face.new(430, 0, true);
+            let faces[4] = Face.new(300, 0, true);
+            let faces[5] = Face.new(120, 0, false);
+            let faces[6] = Face.new(220, 0, false);
+            let faces[7] = Face.new(260, 0, false);
+            let faces[8] = Face.new(330, 0, false);
+            let faces[9] = Face.new(390, 0, false);
+        }
+        else {
+            if (3 = level) {
+                let faces = Array.new(15);
+
+                let faces[0] = Face.new(10, 0, false);
+                let faces[1] = Face.new(50, 0, false);
+                let faces[2] = Face.new(80, 0, true);
+                let faces[3] = Face.new(115, 0, false);
+                let faces[4] = Face.new(148, 0, true);
+                let faces[5] = Face.new(180, 0, false);
+                let faces[6] = Face.new(220, 0, false);
+                let faces[7] = Face.new(265, 0, false);
+                let faces[8] = Face.new(295, 0, false);
+                let faces[9] = Face.new(335, 0, true);
+                let faces[10] = Face.new(380, 0, true);
+                let faces[11] = Face.new(410, 0, false);
+            }
+        }
+        return this;
+    }
+
+    /* Deletes the board at the end */
+    method void dispose() {
+        do faces.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /* Return faces array */
+    method Array getFaces() {
+        return faces;
+    }
+
+    /* Moves a face a little */
+    method void moveFace(int idx) {
+        var Face tempFace;
+        let tempFace = faces[idx];
+        if (null = tempFace) { return; }
+        let isSucceed2 = tempFace.move();
+        let isSucceed1 = (isSucceed1 | isSucceed2);
+        return;
+    }
+
+    /* Moves all faces a little in random order */
+    method boolean run(int level) {
+        let isSucceed1 = false;
+        if (isSucceed) {
+            if (1 = level) {
+                do moveFace(2);
+                do moveFace(2);
+                do moveFace(2);
+                do moveFace(2);
+                do moveFace(0);
+                do moveFace(0);
+                do moveFace(4);
+                do moveFace(1);
+                do moveFace(1);
+                do moveFace(6);
+                do moveFace(6);
+                do moveFace(5);
+                do moveFace(3);
+                do moveFace(3);
+                do moveFace(3);
+                do moveFace(3);
+                do moveFace(3);
+            }
+            else {
+                if (2 = level) {
+                    do moveFace(2);
+                    do moveFace(5);
+                    do moveFace(5);
+                    do moveFace(5);
+                    do moveFace(8);
+                    do moveFace(1);
+                    do moveFace(1);
+                    do moveFace(2);
+                    do moveFace(0);
+                    do moveFace(6);
+                    do moveFace(6);
+                    do moveFace(7);
+                    do moveFace(7);
+                    do moveFace(7);
+                    do moveFace(7);
+                    do moveFace(7);
+                    do moveFace(7);
+                    do moveFace(3);
+                    do moveFace(3);
+                    do moveFace(8);
+                    do moveFace(8);
+                    do moveFace(8);
+                    do moveFace(8);
+                    do moveFace(4);
+                    do moveFace(9);
+                    do moveFace(1);
+                }
+                else {
+                    do moveFace(0);
+                    do moveFace(1);
+                    do moveFace(1);
+                    do moveFace(1);
+                    do moveFace(2);
+                    do moveFace(2);
+                    do moveFace(3);
+                    do moveFace(3);
+                    do moveFace(4);
+                    do moveFace(5);
+                    do moveFace(6);
+                    do moveFace(6);
+                    do moveFace(6);
+                    do moveFace(7);
+                    do moveFace(7);
+                    do moveFace(7);
+                    do moveFace(8);
+                    do moveFace(9);
+                    do moveFace(9);
+                    do moveFace(9);
+                    do moveFace(10);
+                    do moveFace(11);
+                }
+            }
+
+            let isSucceed = isSucceed1;
+        }
+        return isSucceed;
+    }
+}
